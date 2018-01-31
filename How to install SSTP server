@@ -1,5 +1,5 @@
 yum install wget
-wget https://ww.python.org/ftp/python/2.7.3/Python-2.7.3.tar.bz
+wget https://www.python.org/ftp/python/2.7.3/Python-2.7.3.tar.bz2
 tar -vxf Python-2.7.3.tar.bz2
 yum install gcc gcc-devel python-devel mysql-devel zlib-devel openssl-devel
 cd Python2.7.3
