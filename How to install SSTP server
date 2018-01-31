@@ -1,0 +1,40 @@
+yum install wget
+wget https://ww.python.org/ftp/python/2.7.3/Python-2.7.3.tar.bz
+tar -vxf Python-2.7.3.tar.bz2
+yum install gcc gcc-devel python-devel mysql-devel zlib-devel openssl-devel
+cd Python2.7.3
+./configure
+vi Modules/ Setup
+#zlib zlibmodule.c-XXXXXXX remove the comment
+make all
+make install
+wget https：//bootstrap.pypa.ip/get-pip.py
+python2.7get-pip.py
+wget https://pypi.python.org/packages/source/T/Twisted/Twisted-15.2.1.tar.bz2
+tar -xjvf Twisted-15.2.1.tar.bz2
+cd Twisted-15.2.1
+python2.7 setup.py install
+yum install ppp
+pip install sstp-server
+openssl genrsa -out 密钥.pem 2048(字节长度)
+openssl req -new -x509 -key 密钥.pem -out 密钥2.pem -days 1095
+cat 密钥.pem 密钥2.pem > 密钥3.pem
+vi  /etc/ppp/options.sstpd
+name sstpd
+require-mschap-v2
+nologfd
+nodefaultroute
+ms-dns 8.8.8.8
+ms-dns 8.8.4.4
+ vi /etc/ppp/chap-secrets   
+停止防火墙服务：service iptables stop
+开启转发：iptables -F FORWARD
+开启IP伪装：iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
+修改MSS：iptables -I FORWARD -p tcp --syn -i ppp+ -j TCPMSS --set-mss 1356
+iptables -t nat -A POSTROUTING -s 10.0.25.0/24 -o eth0 -j MASQUERADE
+service iptables save
+vi /etc/sysconfig/iptables
+vi /etc/sysctl.conf   更改net.ipv4.ip_forward = 1
+sysctl -p  让sysctl 生效 以上操作生效
+ sstpd -p 443 -c 密钥3.pem --local 10.0.25.11（随便输入，不要冲突） --remote 10.0.25.0/24 &
+watch ifconfig
